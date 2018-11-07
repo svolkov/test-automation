@@ -1,19 +1,23 @@
 package mentoring.automation;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class AppTest
 {
     /**
      * Rigorous Test :-)
      */
     @Test
-    public void shouldAnswerWithTrue()
+    public void testFireFoxDriver()
     {
-        assertTrue( true );
+        WebDriver driver = WebDriverBuilder.getFireFoxWebDriver();
+        assertNotNull( driver );
+        driver.get( "https://testng.org" );
+        driver.quit();
     }
 }
