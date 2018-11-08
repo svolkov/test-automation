@@ -2,7 +2,6 @@ package mentoring.automation;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 public class AppTest
 {
@@ -10,7 +9,6 @@ public class AppTest
     public void testFireFoxDriver()
     {
         WebDriver driver = WebDriverBuilder.getFireFoxDriver();
-        assertNotNull( driver );
         driver.get( "https://testng.org" );
         driver.quit();
     }
@@ -18,7 +16,13 @@ public class AppTest
     @Test
     public void testChromeDriver(){
         WebDriver driver = WebDriverBuilder.getChromeDriver();
-        assertNotNull( driver );
+        driver.get( "https://testng.org" );
+        driver.quit();
+    }
+
+    @Test
+    public void testInternetExplorerDriver(){
+        WebDriver driver = WebDriverBuilder.getIEDriver();
         driver.get( "https://testng.org" );
         driver.quit();
     }
