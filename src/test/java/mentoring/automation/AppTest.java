@@ -1,5 +1,6 @@
 package mentoring.automation;
 
+import mentoring.automation.helpers.WebDriverBuilder;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
