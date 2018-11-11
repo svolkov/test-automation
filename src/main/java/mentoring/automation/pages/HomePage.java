@@ -8,8 +8,8 @@ public class HomePage {
     private static final String PAGE_TITLE_FRAGMENT = "ROZETKA";
     private static final String EXCEPTION_MESSAGE = "Webdriver does not point to the HomePage, current location is ";
     private WebDriver driver;
-    private By searchField = By.className("rz-header-search-input-text passive");
-    private By submitButton = By.className("btn-link-i js-rz-search-button");
+    private By searchField = By.xpath("//input[@class=\"rz-header-search-input-text passive\"]");
+    private By submitButton = By.xpath("//button[@class=\"btn-link-i js-rz-search-button\"]");
 
     public HomePage(WebDriver driver){
         this.driver = driver;
@@ -18,13 +18,11 @@ public class HomePage {
         }
     }
 
-    public int getFoundGoodsNumber(String goodsName){
-        int number = 0;
+    public SearchResultsPage searchGoodsByName(String goodsName){
         WebElement inputField = driver.findElement(searchField);
         inputField.sendKeys(goodsName);
         WebElement button = driver.findElement(submitButton);
         button.click();
-
-        return number;
+        return new SearchResultsPage();
     }
 }

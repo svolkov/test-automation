@@ -1,6 +1,9 @@
 package mentoring.automation;
 
+import mentoring.automation.helpers.ConfigPropertiesReader;
 import mentoring.automation.helpers.WebDriverBuilder;
+import mentoring.automation.pages.HomePage;
+import mentoring.automation.pages.SearchResultsPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
@@ -14,11 +17,14 @@ public class SearchGoodsTestCase {
     @BeforeMethod
     public void beforeClass(){
         webdriver = WebDriverBuilder.getForPredefinedBrowser();
+        webdriver.get(ConfigPropertiesReader.getSite());
     }
 
     @Test
-    public void testRozetka(){
-        Assert.assertEquals(1, 1);
+    public void testFoundGoodsNumber(){
+        HomePage homePage = new HomePage(webdriver);
+        SearchResultsPage resultsPage = homePage.searchGoodsByName("sony");
+        //Assert.assertEquals(1, 1);
     }
 
     @AfterMethod
