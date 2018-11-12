@@ -12,11 +12,9 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class WebDriverBuilder {
     private final static Logger logger = LogManager.getLogger( WebDriverBuilder.class.getName() );
-    //private final static String WEBDRIVER_PATH = "C:\\Users\\sergey.volkov\\Projects\\webdrivers\\";
-    private final static String LINE_SEPARATOR = System.getProperty("file.separator");
-    private final static String WEBDRIVER_PATH = WebDriverBuilder.class
-                                            .getResource(LINE_SEPARATOR + "webdrivers" + LINE_SEPARATOR)
-                                            .getPath();
+    private final static String WEBDRIVER_FOLDER = "webdrivers";
+    private final static String WEBDRIVER_PATH = WebDriverBuilder.class.getClassLoader()
+                                                .getResource(WEBDRIVER_FOLDER).getPath();
     private static String executableFileExtension = "";
 
     static{
@@ -27,7 +25,7 @@ public class WebDriverBuilder {
 
     public static WebDriver getFireFoxDriver(){
         logger.info("Creating webdriver for FireFox");
-        System.setProperty( "webdriver.gecko.driver", WEBDRIVER_PATH + "geckodriver.exe" );
+        System.setProperty( "webdriver.gecko.driver", WEBDRIVER_PATH + "/geckodriver.exe" );
         FirefoxOptions options = new FirefoxOptions(  );
         options.setCapability( "marionette", false );
         return new FirefoxDriver( options );
@@ -35,13 +33,13 @@ public class WebDriverBuilder {
 
     public static WebDriver getChromeDriver(){
         logger.info("Creating webdriver for Chrome");
-        System.setProperty("webdriver.chrome.driver", WEBDRIVER_PATH + "chromedriver" + executableFileExtension);
+        System.setProperty("webdriver.chrome.driver", WEBDRIVER_PATH + "/chromedriver" + executableFileExtension);
         return new ChromeDriver();
     }
 
     public static WebDriver getIEDriver(){
         logger.info("Creating webdriver for InternetExplorer");
-        System.setProperty("webdriver.ie.driver", WEBDRIVER_PATH + "IEDriverServer.exe");
+        System.setProperty("webdriver.ie.driver", WEBDRIVER_PATH + "/IEDriverServer.exe");
         return new InternetExplorerDriver();
     }
 
