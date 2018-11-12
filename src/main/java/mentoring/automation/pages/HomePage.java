@@ -23,6 +23,6 @@ public class HomePage {
         inputField.sendKeys(goodsName);
         WebElement button = driver.findElement(submitButton);
         button.click();
-        return new SearchResultsPage();
+        return new SearchResultsPage(driver);
     }
 }
