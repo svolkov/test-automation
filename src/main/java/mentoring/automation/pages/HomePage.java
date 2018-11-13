@@ -11,7 +11,8 @@ public class HomePage {
     private WebDriver driver;
     private By searchField = By.xpath("//input[@class=\"rz-header-search-input-text passive\"]");
     private By submitButton = By.xpath("//button[@class=\"btn-link-i js-rz-search-button\"]");
-    private By activeLanguage = By.className( "" );
+    //private By activeLanguage = By.xpath( "//span[@class=\"lang-switcher-link active\"]" );
+    private By activeLanguage = By.className( "header-topline__language-item_state_active" );
     private By linkSwitchLanguageUA = By.linkText( "/ua/" );
     private By linkSwitchLanguageRU = By.linkText( "/ru/" );
 
@@ -20,47 +21,40 @@ public class HomePage {
         if(!driver.getTitle().contains( PAGE_TITLE_FRAGMENT )){
             throw new IllegalArgumentException( EXCEPTION_MESSAGE + driver.getCurrentUrl() );
         }
-        clickSwitchLanguage( SiteLanguage.UA );
+        if(getActiveLanguage().equals(SiteLanguage.RU)) {
+            clickSwitchLanguage(SiteLanguage.UA);
+        }
     }
 
-    public SearchResultsPage searchGoodsByName(String goodsName){
+    public SearchResultsPage searchGoodsByName( String goodsName ){
         typeSearchField( goodsName ).clickSearchSubmit();
-        return new SearchResultsPage(driver);
+        return new SearchResultsPage( driver );
     }
 
-    private HomePage typeSearchField(String text){
-        WebElement inputField = driver.findElement(searchField);
+    public HomePage clickSwitchLanguage( SiteLanguage language ){
+        By linkLocator;
+        if(language == SiteLanguage.UA){
+            linkLocator = linkSwitchLanguageUA;
+        }else{
+            linkLocator = linkSwitchLanguageRU;
+        }
+        driver.findElement( linkLocator ).click();
+        return this;
+    }
+
+    private HomePage typeSearchField( String text ){
+        WebElement inputField = driver.findElement( searchField );
         inputField.sendKeys(text);
         return this;
     }
 
     private HomePage clickSearchSubmit(){
-        WebElement button = driver.findElement(submitButton);
+        WebElement button = driver.findElement( submitButton );
         button.click();
         return this;
     }
 
-    private HomePage clickSwitchLanguage(SiteLanguage language){
-        By linkLocator;
-        if(language == SiteLanguage.UA){
-                linkLocator = linkSwitchLanguageUA;
-        }else{
-            linkLocator = linkSwitchLanguageRU;
-        }
-
-        if(isLinkToSwitchLanguageDisplayed( linkLocator )){
-            WebElement link = driver.findElement( linkLocator );
-            link.click();
-        }
-        return this;
-    }
-
-    private boolean isLinkToSwitchLanguageDisplayed( By locator ){
-        boolean result = false;
-        WebElement link = driver.findElement( locator );
-        if(link.getText().equals( language.getName() )){
-            result = true;
-        }
-        return result;
+    private String getActiveLanguage(){
+        return driver.findElement(activeLanguage).getText();
     }
 }
