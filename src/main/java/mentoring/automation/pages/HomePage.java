@@ -11,13 +11,16 @@ public class HomePage {
     private WebDriver driver;
     private By searchField = By.xpath("//input[@class=\"rz-header-search-input-text passive\"]");
     private By submitButton = By.xpath("//button[@class=\"btn-link-i js-rz-search-button\"]");
-    private By switchLanguageLink = By.xpath( "//a[@class=\"lang-switcher-link whitelink\"]" );
+    private By activeLanguage = By.className( "" );
+    private By linkSwitchLanguageUA = By.linkText( "/ua/" );
+    private By linkSwitchLanguageRU = By.linkText( "/ru/" );
 
     public HomePage(WebDriver driver){
         this.driver = driver;
         if(!driver.getTitle().contains( PAGE_TITLE_FRAGMENT )){
             throw new IllegalArgumentException( EXCEPTION_MESSAGE + driver.getCurrentUrl() );
         }
+        clickSwitchLanguage( SiteLanguage.UA );
     }
 
     public SearchResultsPage searchGoodsByName(String goodsName){
@@ -37,20 +40,27 @@ public class HomePage {
         return this;
     }
 
-    private boolean isLinkToSwitchLanguageDisplayed( SiteLanguage language ){
+    private HomePage clickSwitchLanguage(SiteLanguage language){
+        By linkLocator;
+        if(language == SiteLanguage.UA){
+                linkLocator = linkSwitchLanguageUA;
+        }else{
+            linkLocator = linkSwitchLanguageRU;
+        }
+
+        if(isLinkToSwitchLanguageDisplayed( linkLocator )){
+            WebElement link = driver.findElement( linkLocator );
+            link.click();
+        }
+        return this;
+    }
+
+    private boolean isLinkToSwitchLanguageDisplayed( By locator ){
         boolean result = false;
-        WebElement link = driver.findElement( switchLanguageLink );
+        WebElement link = driver.findElement( locator );
         if(link.getText().equals( language.getName() )){
             result = true;
         }
         return result;
-    }
-
-    private HomePage clickSwitchLanguage(SiteLanguage language){
-        if(isLinkToSwitchLanguageDisplayed( language )){
-            WebElement link = driver.findElement( switchLanguageLink );
-            link.click();
-        }
-        return this;
     }
 }
