@@ -4,6 +4,8 @@ import mentoring.automation.constants.SiteLanguage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage {
     private static final String PAGE_TITLE_FRAGMENT = "ROZETKA";
@@ -14,6 +16,7 @@ public class HomePage {
     private By activeLanguage = By.xpath( "//span[@class=\"lang-switcher-link active\" or @class=\"header-topline__language-item_state_active\"]" );
     private By linkSwitchLanguageUA = By.linkText( "UA" );
     private By linkSwitchLanguageRU = By.linkText( "RU" );
+    private By newcomersGreeting = By.className("auth-b-title");
 
     public HomePage(WebDriver driver){
         this.driver = driver;
@@ -38,6 +41,8 @@ public class HomePage {
             linkLocator = linkSwitchLanguageRU;
         }
         driver.findElement( linkLocator ).click();
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(newcomersGreeting));
         return this;
     }
 
