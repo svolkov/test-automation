@@ -1,8 +1,8 @@
 package mentoring.automation.constants;
 
 public enum SiteLanguage {
-    UA("ua"),
-    RU("ru");
+    UA("UA"),
+    RU("RU");
 
     private final String name;
 

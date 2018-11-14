@@ -34,6 +34,9 @@ public class WebDriverBuilder {
     public static WebDriver getChromeDriver(){
         logger.info("Creating webdriver for Chrome");
         System.setProperty("webdriver.chrome.driver", WEBDRIVER_PATH + "/chromedriver" + executableFileExtension);
+//        WebDriver webDriver = new ChromeDriver();
+//        webDriver.manage().window().maximize();
+//        return webDriver;
         return new ChromeDriver();
     }
 
@@ -56,6 +59,7 @@ public class WebDriverBuilder {
             logger.error("Check 'config.properties': undefined browser was found.");
             throw new IllegalArgumentException();
         }
+        driver.manage().window().maximize();
         return driver;
     }
 }

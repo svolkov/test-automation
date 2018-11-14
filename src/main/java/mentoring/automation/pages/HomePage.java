@@ -11,17 +11,16 @@ public class HomePage {
     private WebDriver driver;
     private By searchField = By.xpath("//input[@class=\"rz-header-search-input-text passive\"]");
     private By submitButton = By.xpath("//button[@class=\"btn-link-i js-rz-search-button\"]");
-    //private By activeLanguage = By.xpath( "//span[@class=\"lang-switcher-link active\"]" );
-    private By activeLanguage = By.className( "header-topline__language-item_state_active" );
-    private By linkSwitchLanguageUA = By.linkText( "/ua/" );
-    private By linkSwitchLanguageRU = By.linkText( "/ru/" );
+    private By activeLanguage = By.xpath( "//span[@class=\"lang-switcher-link active\" or @class=\"header-topline__language-item_state_active\"]" );
+    private By linkSwitchLanguageUA = By.linkText( "UA" );
+    private By linkSwitchLanguageRU = By.linkText( "RU" );
 
     public HomePage(WebDriver driver){
         this.driver = driver;
         if(!driver.getTitle().contains( PAGE_TITLE_FRAGMENT )){
             throw new IllegalArgumentException( EXCEPTION_MESSAGE + driver.getCurrentUrl() );
         }
-        if(getActiveLanguage().equals(SiteLanguage.RU)) {
+        if(getActiveLanguage().equals(SiteLanguage.RU.getName())) {
             clickSwitchLanguage(SiteLanguage.UA);
         }
     }
