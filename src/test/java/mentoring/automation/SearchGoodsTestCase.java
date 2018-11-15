@@ -12,18 +12,25 @@ import org.testng.annotations.Test;
 
 public class SearchGoodsTestCase {
     private WebDriver webdriver;
+    private HomePage homePage;
 
     @BeforeMethod
     public void beforeClass(){
         webdriver = WebDriverBuilder.getForPredefinedBrowser();
         webdriver.get(ConfigPropertiesReader.getSite());
+        homePage = new HomePage(webdriver);
     }
 
     @Test
     public void testFoundGoodsNumber(){
-        HomePage homePage = new HomePage(webdriver);
         SearchResultsPage resultsPage = homePage.searchGoodsByName("sony playstation");
         Assert.assertEquals( resultsPage.getFoundGoodsNumber(), 260, "Wrong number of goods found by Search");
+    }
+
+    @Test
+    public void testUnsuccessfulSearch(){
+        SearchResultsPage resultsPage = homePage.searchGoodsByName("abrakadabra");
+        Assert.assertTrue(resultsPage.isNothingFound(), "Unsuccessful search message is not displayed");
     }
 
     @AfterMethod

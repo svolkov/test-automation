@@ -1,5 +1,7 @@
 package mentoring.automation.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.util.Integers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,10 +10,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SearchResultsPage {
+    private static final Logger logger = LogManager.getLogger( SearchResultsPage.class );
     private final static String PAGE_TITLE_FRAGMENT = "ROZETKA — Результати пошуку:";
     private static final String EXCEPTION_MESSAGE = "Webdriver does not point to the SearchResultsPage, current location is ";
     private WebDriver driver;
     private By searchResultsMessage = By.className( "rz-search-result-qnty" );
+    private By nothingFoundMessage = By.className( "search-result-title-nothing-text" );
 
     public SearchResultsPage(WebDriver driver){
         this.driver = driver;
@@ -28,7 +32,14 @@ public class SearchResultsPage {
         return Integers.parseInt(result);
     }
 
+    public boolean isNothingFound(){
+        WebDriverWait wait = new WebDriverWait( driver, 10 );
+        return wait.until( ExpectedConditions.presenceOfElementLocated( nothingFoundMessage ) )
+                   .isDisplayed();
+    }
+
     private WebElement getElementSearchResultsMessage(){
         return driver.findElement( searchResultsMessage );
     }
+
 }

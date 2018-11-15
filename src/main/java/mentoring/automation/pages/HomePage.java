@@ -47,14 +47,14 @@ public class HomePage {
     }
 
     private HomePage typeSearchField( String text ){
-        logger.info( "Type '" + text + "' into Search field " );
+        logger.info( "Type '" + text + "' into Search field in the HomePage" );
         WebElement inputField = driver.findElement( searchField );
         inputField.sendKeys(text);
         return this;
     }
 
     private HomePage clickSearchSubmit(){
-        logger.info( "Submit Search" );
+        logger.info( "Submit Search field in the HomePage" );
         WebElement button = driver.findElement( submitButton );
         button.click();
         return this;
