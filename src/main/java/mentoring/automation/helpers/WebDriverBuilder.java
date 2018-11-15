@@ -9,7 +9,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
-
 public class WebDriverBuilder {
     private final static Logger logger = LogManager.getLogger( WebDriverBuilder.class.getName() );
     private final static String WEBDRIVER_FOLDER = "webdrivers";
@@ -25,7 +24,7 @@ public class WebDriverBuilder {
 
     public static WebDriver getFireFoxDriver(){
         logger.info("Creating webdriver for FireFox");
-        System.setProperty( "webdriver.gecko.driver", WEBDRIVER_PATH + "/geckodriver.exe" );
+        System.setProperty( "webdriver.gecko.driver", WEBDRIVER_PATH + "/geckodriver" + executableFileExtension );
         FirefoxOptions options = new FirefoxOptions(  );
         options.setCapability( "marionette", false );
         return new FirefoxDriver( options );
@@ -33,14 +32,15 @@ public class WebDriverBuilder {
 
     public static WebDriver getChromeDriver(){
         logger.info("Creating webdriver for Chrome");
-        System.setProperty("webdriver.chrome.driver", WEBDRIVER_PATH + "/chromedriver" + executableFileExtension);
-//        WebDriver webDriver = new ChromeDriver();
-//        webDriver.manage().window().maximize();
-//        return webDriver;
+        System.setProperty( "webdriver.chrome.driver", WEBDRIVER_PATH + "/chromedriver" + executableFileExtension );
         return new ChromeDriver();
     }
 
     public static WebDriver getIEDriver(){
+        if(executableFileExtension.isEmpty()){
+            logger.error( "InternetExplorer is applicable only for OS Windows" );
+            assert false;
+        }
         logger.info("Creating webdriver for InternetExplorer");
         System.setProperty("webdriver.ie.driver", WEBDRIVER_PATH + "/IEDriverServer.exe");
         return new InternetExplorerDriver();
