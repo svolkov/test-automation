@@ -23,7 +23,8 @@ public class SearchGoodsTestCase {
     @Test
     public void testFoundGoodsNumber(){
         HomePage homePage = new HomePage(webdriver);
-        SearchResultsPage resultsPage = homePage.searchGoodsByName("sony");
+        SearchResultsPage resultsPage = homePage.searchGoodsByName("sony playstation4");
+        int number = resultsPage.getFoundGoodsNumber();
         //Assert.assertEquals(1, 1);
     }
 
