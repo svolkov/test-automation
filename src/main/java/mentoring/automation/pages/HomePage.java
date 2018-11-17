@@ -26,9 +26,6 @@ public class HomePage {
         if(!driver.getTitle().contains( PAGE_TITLE_FRAGMENT )){
             throw new IllegalArgumentException( EXCEPTION_MESSAGE + driver.getCurrentUrl() );
         }
-        if(getActiveLanguage().equals(SiteLanguage.RU.getName())) {
-            clickSwitchLanguage(SiteLanguage.UA);
-        }
     }
 
     public SearchResultsPage searchGoodsByName( String goodsName ){
@@ -46,6 +43,11 @@ public class HomePage {
         return switchLanguage( linkLocator );
     }
 
+    public String getActiveLanguage(){
+        logger.info( "Get active language" );
+        return driver.findElement(activeLanguage).getText();
+    }
+
     private HomePage typeSearchField( String text ){
         logger.info( "Type '" + text + "' into Search field in the HomePage" );
         WebElement inputField = driver.findElement( searchField );
@@ -58,11 +60,6 @@ public class HomePage {
         WebElement button = driver.findElement( submitButton );
         button.click();
         return this;
-    }
-
-    private String getActiveLanguage(){
-        logger.info( "Get active language" );
-        return driver.findElement(activeLanguage).getText();
     }
 
     private HomePage switchLanguage( By locator ){

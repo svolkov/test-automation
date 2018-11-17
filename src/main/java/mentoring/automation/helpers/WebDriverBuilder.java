@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import static mentoring.automation.constants.Browsers.*;
 
 public class WebDriverBuilder {
     private final static Logger logger = LogManager.getLogger( WebDriverBuilder.class.getName() );
@@ -19,12 +20,14 @@ public class WebDriverBuilder {
     static{
         if(System.getProperty("os.name").toLowerCase().contains("win")){
             executableFileExtension = ".exe";
+            System.setProperty(INTERNET_EXPLORER.getSystemProperty(), WEBDRIVER_PATH + INTERNET_EXPLORER.getPath());
         }
+        System.setProperty( FIREFOX.getSystemProperty(), WEBDRIVER_PATH + FIREFOX.getPath() + executableFileExtension );
+        System.setProperty( CHROME.getSystemProperty(), WEBDRIVER_PATH + CHROME.getPath() + executableFileExtension );
     }
 
     public static WebDriver getFireFoxDriver(){
         logger.info("Creating webdriver for FireFox");
-        System.setProperty( "webdriver.gecko.driver", WEBDRIVER_PATH + "/geckodriver" + executableFileExtension );
         FirefoxOptions options = new FirefoxOptions(  );
         options.setCapability( "marionette", false );
         return new FirefoxDriver( options );
@@ -32,7 +35,6 @@ public class WebDriverBuilder {
 
     public static WebDriver getChromeDriver(){
         logger.info("Creating webdriver for Chrome");
-        System.setProperty( "webdriver.chrome.driver", WEBDRIVER_PATH + "/chromedriver" + executableFileExtension );
         return new ChromeDriver();
     }
 
@@ -42,22 +44,20 @@ public class WebDriverBuilder {
             assert false;
         }
         logger.info("Creating webdriver for InternetExplorer");
-        System.setProperty("webdriver.ie.driver", WEBDRIVER_PATH + "/IEDriverServer.exe");
         return new InternetExplorerDriver();
     }
 
     public static WebDriver getForPredefinedBrowser() {
-        WebDriver driver;
-        String browserName = ConfigPropertiesReader.getBrowser();
-        if(browserName.equals(Browsers.CHROME.getName())){
-            driver = getChromeDriver();
-        }else if(browserName.equals(Browsers.FIREFOX.getName())){
-                    driver = getFireFoxDriver();
-        }else if(browserName.equals(Browsers.INTERNET_EXPLORER.getName())){
-                    driver = getIEDriver();
-        }else {
-            logger.error("Check 'config.properties': undefined browser was found.");
-            throw new IllegalArgumentException();
+        WebDriver driver = null;
+        Browsers browser = Browsers.valueOf(ConfigPropertiesReader.getBrowser());
+        switch (browser){
+            case CHROME : driver = getChromeDriver();
+                          break;
+            case FIREFOX : driver = getFireFoxDriver();
+                           break;
+            case INTERNET_EXPLORER : driver = getIEDriver();
+                                     break;
+            default : assert false : "Browser is not supported! Check config.properties.";
         }
         driver.manage().window().maximize();
         return driver;

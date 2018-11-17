@@ -24,22 +24,22 @@ public class SearchResultsPage {
         }
     }
 
-    public int getFoundGoodsNumber(){
-        WebDriverWait wait = new WebDriverWait( driver, 10 );
-        wait.until( ExpectedConditions.presenceOfElementLocated( searchResultsMessage ) );
-        String searchResultMessage = getElementSearchResultsMessage().getText();
-        String result = searchResultMessage.replaceAll( "\\D", "" );
-        return Integers.parseInt(result);
+    public String getSearchResultsMessage(){
+        waitPresenceOfElement(searchResultsMessage, 10);
+        return getElementSearchResultsMessage().getText();
     }
 
-    public boolean isNothingFound(){
-        WebDriverWait wait = new WebDriverWait( driver, 10 );
-        return wait.until( ExpectedConditions.presenceOfElementLocated( nothingFoundMessage ) )
-                   .isDisplayed();
+    public boolean isNothingFoundMessageDisplayed(){
+        return waitPresenceOfElement(nothingFoundMessage, 10).isDisplayed();
     }
 
     private WebElement getElementSearchResultsMessage(){
         return driver.findElement( searchResultsMessage );
+    }
+
+    private WebElement waitPresenceOfElement(By elementLocator, long timeInSec){
+        return new WebDriverWait( driver, timeInSec )
+                  .until(ExpectedConditions.presenceOfElementLocated( elementLocator ));
     }
 
 }
