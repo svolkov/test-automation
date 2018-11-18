@@ -14,7 +14,9 @@ public class HomePage {
     private static final Logger logger = LogManager.getLogger( HomePage.class );
     private static final String PAGE_TITLE_FRAGMENT = "ROZETKA";
     private static final String EXCEPTION_MESSAGE = "Webdriver does not point to the HomePage, current location is ";
-    private static final String SITE_LANG_CLASSNAME = "lang-switcher-link active";
+    private static final String SITE_LANGUAGE_CLASSNAME = "lang-switcher-link active";
+    private static final String SEARCH_FIELD_CLASSNAME = "rz-header-search-input-text passive";
+
     private WebDriver driver;
     private By searchField = By.xpath("//input[@class=\"rz-header-search-input-text passive\"]");
     private By submitButton = By.xpath("//button[@class=\"btn-link-i js-rz-search-button\"]");
@@ -50,6 +52,11 @@ public class HomePage {
         return driver.findElement(activeLanguage).getText();
     }
 
+    public SearchResultsPage searchGoodsByNameJS( String goodsName ){
+        typeSearchFieldByJS( goodsName ).clickSearchSubmit();
+        return new SearchResultsPage( driver );
+    }
+
     private HomePage typeSearchField( String text ){
         logger.info( "Type '" + text + "' into Search field in the HomePage" );
         WebElement inputField = driver.findElement( searchField );
@@ -76,6 +83,14 @@ public class HomePage {
         logger.info( "Get active language using JavaScript" );
         JavascriptExecutor js = (JavascriptExecutor) driver;
         return (String) js.executeScript("return document.getElementsByClassName(arguments[0])[0].getText()",
-                                            SITE_LANG_CLASSNAME );
+                SITE_LANGUAGE_CLASSNAME);
+    }
+
+    private HomePage typeSearchFieldByJS( String text ){
+        logger.info( "Type '" + text + "' into Search field in the HomePage" );
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.getElementsByClassName(arguments[0])[0].value = " + text,
+                SEARCH_FIELD_CLASSNAME);
+        return this;
     }
 }

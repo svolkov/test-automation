@@ -45,6 +45,11 @@ public class SearchGoodsTestCase {
         Assert.assertEquals(homePage.getActiveLanguageByJS(), "UA", "Active site language is wrong.");
     }
 
+    @Test
+    public void testSearchGoodsByJS(){
+        SearchResultsPage resultsPage = homePage.searchGoodsByNameJS("sony playstation4");
+    }
+
     @AfterMethod
     public void afterMethod(){
         if(webdriver != null){
