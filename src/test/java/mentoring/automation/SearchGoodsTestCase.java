@@ -40,6 +40,11 @@ public class SearchGoodsTestCase {
         Assert.assertTrue(resultsPage.isNothingFoundMessageDisplayed(), "Unsuccessful search message is not displayed");
     }
 
+    @Test
+    public void testGetActiveLanguageByJS(){
+        Assert.assertEquals(homePage.getActiveLanguageByJS(), "UA", "Active site language is wrong.");
+    }
+
     @AfterMethod
     public void afterMethod(){
         if(webdriver != null){

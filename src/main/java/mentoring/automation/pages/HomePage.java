@@ -4,6 +4,7 @@ import mentoring.automation.constants.SiteLanguage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,6 +14,7 @@ public class HomePage {
     private static final Logger logger = LogManager.getLogger( HomePage.class );
     private static final String PAGE_TITLE_FRAGMENT = "ROZETKA";
     private static final String EXCEPTION_MESSAGE = "Webdriver does not point to the HomePage, current location is ";
+    private static final String SITE_LANG_CLASSNAME = "lang-switcher-link active";
     private WebDriver driver;
     private By searchField = By.xpath("//input[@class=\"rz-header-search-input-text passive\"]");
     private By submitButton = By.xpath("//button[@class=\"btn-link-i js-rz-search-button\"]");
@@ -68,5 +70,12 @@ public class HomePage {
         WebDriverWait wait = new WebDriverWait(driver,10);
         wait.until(ExpectedConditions.presenceOfElementLocated(newcomersGreeting));
         return this;
+    }
+
+    public String getActiveLanguageByJS(){
+        logger.info( "Get active language using JavaScript" );
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        return (String) js.executeScript("return document.getElementsByClassName(arguments[0])[0].getText()",
+                                            SITE_LANG_CLASSNAME );
     }
 }
