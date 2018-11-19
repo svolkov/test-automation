@@ -16,10 +16,12 @@ public class HomePage {
     private static final String EXCEPTION_MESSAGE = "Webdriver does not point to the HomePage, current location is ";
     private static final String SITE_LANGUAGE_CLASSNAME = "lang-switcher-link active";
     private static final String SEARCH_FIELD_CLASSNAME = "rz-header-search-input-text passive";
+    private static final String SUBMIT_SEARCH_CLASSNAME = "btn-link-i js-rz-search-button";
 
     private WebDriver driver;
-    private By searchField = By.xpath("//input[@class=\"rz-header-search-input-text passive\"]");
-    private By submitButton = By.xpath("//button[@class=\"btn-link-i js-rz-search-button\"]");
+    private JavascriptExecutor js;
+    private By searchField = By.xpath("//input[@class=\"" + SEARCH_FIELD_CLASSNAME + "\"]");
+    private By submitButton = By.xpath("//button[@class=\"" + SUBMIT_SEARCH_CLASSNAME + "\"]");
     private By activeLanguage = By.xpath( "//span[@class=\"lang-switcher-link active\" or @class=\"header-topline__language-item_state_active\"]" );
     private By linkSwitchLanguageUA = By.linkText( "UA" );
     private By linkSwitchLanguageRU = By.linkText( "RU" );
@@ -30,6 +32,7 @@ public class HomePage {
         if(!driver.getTitle().contains( PAGE_TITLE_FRAGMENT )){
             throw new IllegalArgumentException( EXCEPTION_MESSAGE + driver.getCurrentUrl() );
         }
+        js = (JavascriptExecutor) driver;
     }
 
     public SearchResultsPage searchGoodsByName( String goodsName ){
@@ -53,7 +56,7 @@ public class HomePage {
     }
 
     public SearchResultsPage searchGoodsByNameJS( String goodsName ){
-        typeSearchFieldByJS( goodsName ).clickSearchSubmit();
+        typeSearchFieldByJS( goodsName ).clickSearchSubmitByJS();
         return new SearchResultsPage( driver );
     }
 
@@ -81,16 +84,20 @@ public class HomePage {
 
     public String getActiveLanguageByJS(){
         logger.info( "Get active language using JavaScript" );
-        JavascriptExecutor js = (JavascriptExecutor) driver;
         return (String) js.executeScript("return document.getElementsByClassName(arguments[0])[0].getText()",
                 SITE_LANGUAGE_CLASSNAME);
     }
 
     private HomePage typeSearchFieldByJS( String text ){
-        logger.info( "Type '" + text + "' into Search field in the HomePage" );
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("document.getElementsByClassName(arguments[0])[0].value = " + text,
-                SEARCH_FIELD_CLASSNAME);
+        logger.info( "Type '" + text + "' into Search field in the HomePage using JavaScript" );
+        js.executeScript("document.getElementsByClassName(arguments[0])[0].value = arguments[1]",
+                SEARCH_FIELD_CLASSNAME, text);
+        return this;
+    }
+
+    private HomePage clickSearchSubmitByJS(){
+        logger.info( "Submit Search field in the HomePage using JavaScript" );
+        js.executeScript( "document.getElementsByClassName(arguments[0])[0].click()", SUBMIT_SEARCH_CLASSNAME );
         return this;
     }
 }

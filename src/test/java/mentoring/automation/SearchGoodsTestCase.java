@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 
 public class SearchGoodsTestCase {
     private final static String SEARCH_RESULTS_MESSAGE = "Знайдено 260 товарів";
+
     private WebDriver webdriver;
     private HomePage homePage;
 
@@ -29,7 +30,6 @@ public class SearchGoodsTestCase {
     @Test
     public void testFoundGoodsNumber(){
         SearchResultsPage resultsPage = homePage.searchGoodsByName("sony playstation");
-
         Assert.assertEquals( resultsPage.getSearchResultsMessage(), SEARCH_RESULTS_MESSAGE,
                         "Wrong Search Results message");
     }
@@ -38,16 +38,6 @@ public class SearchGoodsTestCase {
     public void testUnsuccessfulSearch(){
         SearchResultsPage resultsPage = homePage.searchGoodsByName("abrakadabra");
         Assert.assertTrue(resultsPage.isNothingFoundMessageDisplayed(), "Unsuccessful search message is not displayed");
-    }
-
-    @Test
-    public void testGetActiveLanguageByJS(){
-        Assert.assertEquals(homePage.getActiveLanguageByJS(), "UA", "Active site language is wrong.");
-    }
-
-    @Test
-    public void testSearchGoodsByJS(){
-        SearchResultsPage resultsPage = homePage.searchGoodsByNameJS("sony playstation4");
     }
 
     @AfterMethod

@@ -8,6 +8,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+
+import java.util.concurrent.TimeUnit;
+
 import static mentoring.automation.constants.Browsers.*;
 
 public class WebDriverBuilder {
@@ -48,18 +51,31 @@ public class WebDriverBuilder {
     }
 
     public static WebDriver getForPredefinedBrowser() {
-        WebDriver driver = null;
         Browsers browser = Browsers.valueOf(ConfigPropertiesReader.getBrowser());
+        WebDriver driver = selectBrowser(browser);
+        driver.manage().window().maximize();
+        return driver;
+    }
+
+    public static WebDriver getForPredefinedBrowserWithImplicitWait(long timeInSec) {
+        Browsers browser = Browsers.valueOf(ConfigPropertiesReader.getBrowser());
+        WebDriver driver = selectBrowser(browser);
+        driver.manage().timeouts().implicitlyWait( timeInSec, TimeUnit.SECONDS );
+        driver.manage().window().maximize();
+        return driver;
+    }
+
+    private static WebDriver selectBrowser(Browsers browser){
+        WebDriver driver = null;
         switch (browser){
             case CHROME : driver = getChromeDriver();
-                          break;
+                break;
             case FIREFOX : driver = getFireFoxDriver();
-                           break;
+                break;
             case INTERNET_EXPLORER : driver = getIEDriver();
-                                     break;
+                break;
             default : assert false : "Browser is not supported! Check config.properties.";
         }
-        driver.manage().window().maximize();
         return driver;
     }
 }
