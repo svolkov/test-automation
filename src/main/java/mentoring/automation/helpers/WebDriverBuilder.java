@@ -58,10 +58,8 @@ public class WebDriverBuilder {
     }
 
     public static WebDriver getForPredefinedBrowserWithImplicitWait(long timeInSec) {
-        Browsers browser = Browsers.valueOf(ConfigPropertiesReader.getBrowser());
-        WebDriver driver = selectBrowser(browser);
+        WebDriver driver = getForPredefinedBrowser();
         driver.manage().timeouts().implicitlyWait( timeInSec, TimeUnit.SECONDS );
-        driver.manage().window().maximize();
         return driver;
     }
 
