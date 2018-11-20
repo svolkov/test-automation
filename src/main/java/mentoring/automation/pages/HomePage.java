@@ -26,6 +26,7 @@ public class HomePage {
     private By linkSwitchLanguageUA = By.linkText( "UA" );
     private By linkSwitchLanguageRU = By.linkText( "RU" );
     private By newcomersGreeting = By.className("auth-b-title");
+    private By linkToContactsPage = By.xpath("//a[text()=\" Контакти \"]");
 
     public HomePage(WebDriver driver){
         this.driver = driver;
@@ -58,6 +59,11 @@ public class HomePage {
     public SearchResultsPage searchGoodsByNameJS( String goodsName ){
         typeSearchFieldByJS( goodsName ).clickSearchSubmitByJS();
         return new SearchResultsPage( driver );
+    }
+
+    public ContactsPage openContactsPage(){
+        driver.findElement(linkToContactsPage).click();
+        return new ContactsPage(driver);
     }
 
     private HomePage typeSearchField( String text ){
