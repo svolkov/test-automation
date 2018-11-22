@@ -39,16 +39,16 @@ public class ContactsPage {
         return secondKyivPhone.getText();
     }
 
-    public ProductCatalogPage openSmartphonesCatalog(){
+    public ProductCatalogPage openSmartphonesCatalogue(){
         Actions actionBuilder = new Actions( driver);
-        Action moveToCatalog = actionBuilder.moveToElement( catalog)
+        Action openCataloguePage = actionBuilder.moveToElement( catalog)
                                             .pause( 500 )
                                             .moveToElement(smartphonesCatalog)
                                             .pause( 500 )
                                             .moveToElement(smartphonesSubcatalog)
                                             .click()
                                             .build();
-        moveToCatalog.perform();
+        openCataloguePage.perform();
         return new ProductCatalogPage( driver );
     }
 

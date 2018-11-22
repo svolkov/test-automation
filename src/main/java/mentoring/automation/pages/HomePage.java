@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -64,6 +66,20 @@ public class HomePage {
     public ContactsPage openContactsPage(){
         driver.findElement(linkToContactsPage).click();
         return new ContactsPage(driver);
+    }
+
+    public ProductCatalogPage selectProductsGroupInCatalogue(String subCatalogName, String productGroupName){
+        By subCatalog = By.xpath("//li[@class=\"f-menu-l-i\"]//a[contains(text(), \"" + subCatalogName + "\")]");
+        By productGroup = By.xpath("//li[@class=\"f-menu-sub-l-i\"]//a[contains(text(), \"" + productGroupName + "\")]");
+
+        Actions actionBuilder = new Actions( driver);
+        Action openProductCatalogPage = actionBuilder.moveToElement( driver.findElement(subCatalog) )
+                                            .pause( 500 )
+                                            .moveToElement( driver.findElement(productGroup) )
+                                            .click()
+                                            .build();
+        openProductCatalogPage.perform();
+        return new ProductCatalogPage(driver);
     }
 
     private HomePage typeSearchField( String text ){
