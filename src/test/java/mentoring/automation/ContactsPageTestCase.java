@@ -5,6 +5,7 @@ import mentoring.automation.helpers.ConfigPropertiesReader;
 import mentoring.automation.helpers.WebDriverBuilder;
 import mentoring.automation.pages.ContactsPage;
 import mentoring.automation.pages.HomePage;
+import mentoring.automation.pages.ProductCatalogPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -29,6 +30,13 @@ public class ContactsPageTestCase {
     public void testCheckSecondKyivPhone(){
         ContactsPage contactsPage = homePage.openContactsPage();
         Assert.assertEquals(contactsPage.getSecondKyivPhone(), "(044) 503-80-80", "Wrong second Kyiv phone number.");
+    }
+
+    @Test
+    public void testOpenCatalog(){
+        ContactsPage contactsPage = homePage.openContactsPage();
+        ProductCatalogPage productsPage = contactsPage.openSmartphonesCatalog();
+        Assert.assertEquals( productsPage.getProductGroupName(), "Смартфони", "Product catalog page has wrong name.");
     }
 
     @AfterMethod
