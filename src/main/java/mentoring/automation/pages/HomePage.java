@@ -7,8 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -32,6 +32,7 @@ public class HomePage {
 
     public HomePage(WebDriver driver){
         this.driver = driver;
+        PageFactory.initElements( driver, this );
         if(!driver.getTitle().contains( PAGE_TITLE_FRAGMENT )){
             throw new IllegalArgumentException( EXCEPTION_MESSAGE + driver.getCurrentUrl() );
         }
@@ -69,17 +70,19 @@ public class HomePage {
     }
 
     public ProductCatalogPage selectProductsGroupInCatalogue(String subCatalogName, String productGroupName){
-        By subCatalog = By.xpath("//li[@class=\"f-menu-l-i\"]//a[contains(text(), \"" + subCatalogName + "\")]");
-        By productGroup = By.xpath("//li[@class=\"f-menu-sub-l-i\"]//a[contains(text(), \"" + productGroupName + "\")]");
+        return moveToSubCatalogue( subCatalogName ).chooseProductGroupOfSubCatalogue( productGroupName );
+    }
 
-        Actions actionBuilder = new Actions( driver);
-        Action openProductCatalogPage = actionBuilder.moveToElement( driver.findElement(subCatalog) )
-                                            .pause( 500 )
-                                            .moveToElement( driver.findElement(productGroup) )
-                                            .click()
-                                            .build();
-        openProductCatalogPage.perform();
-        return new ProductCatalogPage(driver);
+    private HomePage moveToSubCatalogue(String subCatalogueName){
+        By subCatalog = By.xpath("//li[@class=\"f-menu-l-i\"]//a[contains(text(), \"" + subCatalogueName + "\")]");
+        new Actions( driver).moveToElement( driver.findElement(subCatalog) ).pause( 500 ).build().perform();
+        return this;
+    }
+
+    private ProductCatalogPage chooseProductGroupOfSubCatalogue(String productGroupName) {
+        By productGroup = By.xpath( "//a[@class=\"f-menu-sub-l-i-link blacklink\" and text()=\" " + productGroupName + " \"]" );
+        new Actions( driver ).moveToElement( driver.findElement( productGroup ) ).pause( 500 ).click().build().perform();
+        return new ProductCatalogPage( driver );
     }
 
     private HomePage typeSearchField( String text ){
