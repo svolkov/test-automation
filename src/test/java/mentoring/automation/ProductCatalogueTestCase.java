@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class ProductCatalogueTestCase {
@@ -25,11 +26,25 @@ public class ProductCatalogueTestCase {
         }
     }
 
+    @DataProvider(name = "products")
+    public Object[][] createTestData(){
+        return new Object[][]{
+                {"Інструменти та автотовари", "Шини", "Автошини"},
+                {"Спорт і захоплення", "Човни й аксесуари", "Човни та аксесуари"}
+        };
+    }
+
+    @Test(dataProvider = "products")
+    public void testChooseProductsGroupInCatalogue(String subCatalogueName, String productGroupName, String productGroupPageName){
+        ProductCatalogPage productsPage = homePage.selectProductsGroupInCatalogue(subCatalogueName, productGroupName);
+        Assert.assertEquals(productsPage.getProductGroupName(), productGroupPageName, "Product catalog page has wrong name.");
+    }
+/*
     @Test
     public void testChooseProductsGroupInCatalogue(){
         ProductCatalogPage productsPage = homePage.selectProductsGroupInCatalogue("Інструменти та автотовари", "Шини");
         Assert.assertEquals(productsPage.getProductGroupName(), "Автошини", "\"Product catalog page has wrong name.\"");
-    }
+    }*/
 
     @AfterMethod
     public void afterMethod(){
@@ -37,4 +52,5 @@ public class ProductCatalogueTestCase {
             webdriver.quit();
         }
     }
+
 }
