@@ -15,14 +15,22 @@ import org.testng.annotations.Test;
 public class ProductCatalogueTestCase {
     private WebDriver webdriver;
     private HomePage homePage;
+    private ProductCatalogPage productsPage;
 
     @BeforeMethod
-    public void beforeClass(){
+    public void beforeMethod(){
         webdriver = WebDriverBuilder.getForPredefinedBrowser();
         webdriver.get(ConfigPropertiesReader.getSite());
         homePage = new HomePage(webdriver);
         if(homePage.getActiveLanguage().equals(SiteLanguage.RU.getName())) {
             homePage.clickSwitchLanguage(SiteLanguage.UA);
+        }
+    }
+
+    @AfterMethod
+    public void afterMethod(){
+        if(webdriver != null){
+            webdriver.quit();
         }
     }
 
@@ -39,18 +47,16 @@ public class ProductCatalogueTestCase {
         ProductCatalogPage productsPage = homePage.selectProductsGroupInCatalogue(subCatalogueName, productGroupName);
         Assert.assertEquals(productsPage.getProductGroupName(), productGroupPageName, "Product catalog page has wrong name.");
     }
-/*
+
     @Test
-    public void testChooseProductsGroupInCatalogue(){
+    public void testChooseOneProductsGroupInCatalogue(){
         ProductCatalogPage productsPage = homePage.selectProductsGroupInCatalogue("Інструменти та автотовари", "Шини");
         Assert.assertEquals(productsPage.getProductGroupName(), "Автошини", "\"Product catalog page has wrong name.\"");
-    }*/
-
-    @AfterMethod
-    public void afterMethod(){
-        if(webdriver != null){
-            webdriver.quit();
-        }
     }
 
+    @Test
+    public void testPriceSlider(){
+        ProductCatalogPage productsPage = homePage.selectProductsGroupInCatalogue("Канцтовари та книги", "Книги для бізнесу");
+        productsPage.moveLeftPriceSliderToRight();
+    }
 }

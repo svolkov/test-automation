@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,6 +18,8 @@ public class ProductCatalogPage {
     WebElement sortingContainer;
     @FindBy(xpath = "//div[@class=\"pos-fix\"]//h1")
     WebElement productGroupName;
+    @FindBy(className = "lb")
+    WebElement leftPriceSlider;
 
     public ProductCatalogPage(WebDriver driver){
         this.driver = driver;
@@ -27,5 +30,14 @@ public class ProductCatalogPage {
     public String getProductGroupName(){
         logger.info( "Locating the name of Product group" );
         return productGroupName.getText();
+    }
+
+    public ProductCatalogPage moveLeftPriceSliderToRight(){
+        new Actions(driver).moveToElement(leftPriceSlider)
+                .clickAndHold()
+                .moveByOffset(20, 0)
+                .release()
+                .perform();
+        return this;
     }
 }
