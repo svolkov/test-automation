@@ -15,7 +15,6 @@ import org.testng.annotations.Test;
 public class ProductCatalogueTestCase {
     private WebDriver webdriver;
     private HomePage homePage;
-    private ProductCatalogPage productsPage;
 
     @BeforeMethod
     public void beforeMethod(){
@@ -57,6 +56,9 @@ public class ProductCatalogueTestCase {
     @Test
     public void testPriceSlider(){
         ProductCatalogPage productsPage = homePage.selectProductsGroupInCatalogue("Канцтовари та книги", "Книги для бізнесу");
+        String initialMinPrice = productsPage.getMinPriceFromFilter();
         productsPage.moveLeftPriceSliderToRight();
+        String correctedMinPrice = productsPage.getMinPriceFromFilter();
+        Assert.assertNotEquals( initialMinPrice, correctedMinPrice, "Wrong content of the min price filter after correction" );
     }
 }

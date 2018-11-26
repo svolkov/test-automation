@@ -20,6 +20,8 @@ public class ProductCatalogPage {
     WebElement productGroupName;
     @FindBy(className = "lb")
     WebElement leftPriceSlider;
+    @FindBy(id = "price[min]")
+    WebElement minPriceInput;
 
     public ProductCatalogPage(WebDriver driver){
         this.driver = driver;
@@ -33,11 +35,17 @@ public class ProductCatalogPage {
     }
 
     public ProductCatalogPage moveLeftPriceSliderToRight(){
+        logger.info( "Moving left price slider to the left" );
         new Actions(driver).moveToElement(leftPriceSlider)
                 .clickAndHold()
                 .moveByOffset(20, 0)
                 .release()
                 .perform();
         return this;
+    }
+
+    public String getMinPriceFromFilter(){
+        logger.info( "Get value of the min price filter" );
+        return minPriceInput.getAttribute( "value" );
     }
 }
