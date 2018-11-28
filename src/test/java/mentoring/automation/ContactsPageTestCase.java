@@ -16,10 +16,24 @@ public class ContactsPageTestCase {
     private WebDriver webdriver;
     private HomePage homePage;
 
+//    @BeforeMethod
+//    public void beforeMethod(){
+//        webdriver = WebDriverBuilder.getForPredefinedBrowser();
+//        webdriver.get(ConfigPropertiesReader.getSite());
+//        homePage = new HomePage(webdriver);
+//        if(homePage.getActiveLanguage().equals(SiteLanguage.RU.getName())) {
+//            homePage.clickSwitchLanguage(SiteLanguage.UA);
+//        }
+//    }
+
     @BeforeMethod
-    public void beforeClass(){
+    public void initWebDriver(){
         webdriver = WebDriverBuilder.getForPredefinedBrowser();
         webdriver.get(ConfigPropertiesReader.getSite());
+    }
+
+    @BeforeMethod(dependsOnMethods = {"initWebDriver"})
+    public void initPage(){
         homePage = new HomePage(webdriver);
         if(homePage.getActiveLanguage().equals(SiteLanguage.RU.getName())) {
             homePage.clickSwitchLanguage(SiteLanguage.UA);
