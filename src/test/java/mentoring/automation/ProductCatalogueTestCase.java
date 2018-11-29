@@ -47,7 +47,7 @@ public class ProductCatalogueTestCase {
         Assert.assertEquals(productsPage.getProductGroupName(), productGroupPageName, "Product catalog page has wrong name.");
     }
 
-    @Test
+    @Test(groups = {"ProductSelection"})
     public void testChooseOneProductsGroupInCatalogue(){
         ProductCatalogPage productsPage = homePage.selectProductsGroupInCatalogue("Інструменти та автотовари", "Шини");
         Assert.assertEquals(productsPage.getProductGroupName(), "Автошини", "\"Product catalog page has wrong name.\"");

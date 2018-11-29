@@ -19,7 +19,7 @@ public class SearchGoodsTestCase {
     private WebDriver webdriver;
     private HomePage homePage;
 
-    @BeforeMethod
+    @BeforeMethod(groups = {"searching", "negative"})
     public void beforeClass(){
         webdriver = WebDriverBuilder.getForPredefinedBrowser();
         webdriver.get(ConfigPropertiesReader.getSite());
@@ -29,20 +29,20 @@ public class SearchGoodsTestCase {
         }
     }
 
-    @Test
+    @Test(groups = {"searching"})
     public void testFoundGoodsNumber(){
         SearchResultsPage resultsPage = homePage.searchGoodsByName("sony playstation");
         Assert.assertEquals( resultsPage.getSearchResultsMessage(), SEARCH_RESULTS_MESSAGE,
                         "Wrong Search Results message");
     }
 
-    @Test
+    @Test(groups = {"searching", "negative"})
     public void testUnsuccessfulSearch(){
         SearchResultsPage resultsPage = homePage.searchGoodsByName("abrakadabra");
         Assert.assertTrue(resultsPage.isNothingFoundMessageDisplayed(), "Unsuccessful search message is not displayed");
     }
 
-    @AfterMethod
+    @AfterMethod(groups = {"searching", "negative"})
     public void afterMethod(ITestResult results){
         if(webdriver != null){
             if(results.getStatus() == ITestResult.FAILURE){

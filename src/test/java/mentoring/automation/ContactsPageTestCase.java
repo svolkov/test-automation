@@ -16,16 +16,6 @@ public class ContactsPageTestCase {
     private WebDriver webdriver;
     private HomePage homePage;
 
-//    @BeforeMethod
-//    public void beforeMethod(){
-//        webdriver = WebDriverBuilder.getForPredefinedBrowser();
-//        webdriver.get(ConfigPropertiesReader.getSite());
-//        homePage = new HomePage(webdriver);
-//        if(homePage.getActiveLanguage().equals(SiteLanguage.RU.getName())) {
-//            homePage.clickSwitchLanguage(SiteLanguage.UA);
-//        }
-//    }
-
     @BeforeMethod
     public void initWebDriver(){
         webdriver = WebDriverBuilder.getForPredefinedBrowser();
@@ -46,7 +36,7 @@ public class ContactsPageTestCase {
         Assert.assertEquals(contactsPage.getSecondKyivPhone(), "(044) 503-80-80", "Wrong second Kyiv phone number.");
     }
 
-    @Test
+    @Test(groups = {"ProductSelection"})
     public void testSelectProductsInCatalogue(){
         ContactsPage contactsPage = homePage.openContactsPage();
         ProductCatalogPage productsPage = contactsPage.openSmartphonesCatalogue();
