@@ -7,10 +7,7 @@ import mentoring.automation.pages.HomePage;
 import mentoring.automation.pages.ProductCatalogPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 public class ProductCatalogueTestCase {
     private WebDriver webdriver;
@@ -60,5 +57,12 @@ public class ProductCatalogueTestCase {
         productsPage.moveLeftPriceSliderToRight();
         String correctedMinPrice = productsPage.getMinPriceFromFilter();
         Assert.assertNotEquals( initialMinPrice, correctedMinPrice, "Wrong content of the min price filter after correction" );
+    }
+
+    @Parameters({"sub-catalogue-name", "products-group-name", "products-group-page-name"})
+    @Test
+    public void testChooseProductsGroupInCatalogueByParameters(String subCatalogueName, String productGroupName, String productGroupPageName){
+        ProductCatalogPage productsPage = homePage.selectProductsGroupInCatalogue(subCatalogueName, productGroupName);
+        Assert.assertEquals(productsPage.getProductGroupName(), productGroupPageName, "Product catalog page has wrong name.");
     }
 }

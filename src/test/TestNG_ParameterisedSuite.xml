@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Products selection suite with parameters">
+    <parameter name="sub-catalogue-name" value="Інструменти та автотовари"/>
+    <parameter name="products-group-name" value="Шини"/>
+    <parameter name="products-group-page-name" value="Автошини"/>
+    <test name="test1">
+        <classes>
+            <class name="mentoring.automation.ProductCatalogueTestCase">
+                <methods>
+                    <include name="testChooseProductsGroupInCatalogueByParameters"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
