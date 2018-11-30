@@ -16,13 +16,13 @@ public class ContactsPageTestCase {
     private WebDriver webdriver;
     private HomePage homePage;
 
-    @BeforeMethod
+    @BeforeMethod(groups = {"ProductSelection"})
     public void initWebDriver(){
         webdriver = WebDriverBuilder.getForPredefinedBrowser();
         webdriver.get(ConfigPropertiesReader.getSite());
     }
 
-    @BeforeMethod(dependsOnMethods = {"initWebDriver"})
+    @BeforeMethod(dependsOnMethods = {"initWebDriver"}, groups = {"ProductSelection"})
     public void initPage(){
         homePage = new HomePage(webdriver);
         if(homePage.getActiveLanguage().equals(SiteLanguage.RU.getName())) {
@@ -43,7 +43,7 @@ public class ContactsPageTestCase {
         Assert.assertEquals( productsPage.getProductGroupName(), "Смартфони", "Product catalog page has wrong name.");
     }
 
-    @AfterMethod
+    @AfterMethod(groups = {"ProductSelection"})
     public void afterMethod(){
         if(webdriver != null){
             webdriver.quit();

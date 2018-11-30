@@ -16,7 +16,7 @@ public class ProductCatalogueTestCase {
     private WebDriver webdriver;
     private HomePage homePage;
 
-    @BeforeMethod
+    @BeforeMethod(groups = {"ProductSelection"})
     public void beforeMethod(){
         webdriver = WebDriverBuilder.getForPredefinedBrowser();
         webdriver.get(ConfigPropertiesReader.getSite());
@@ -26,7 +26,7 @@ public class ProductCatalogueTestCase {
         }
     }
 
-    @AfterMethod
+    @AfterMethod(groups = {"ProductSelection"})
     public void afterMethod(){
         if(webdriver != null){
             webdriver.quit();
