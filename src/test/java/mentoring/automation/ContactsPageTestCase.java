@@ -3,6 +3,7 @@ package mentoring.automation;
 import mentoring.automation.constants.SiteLanguage;
 import mentoring.automation.helpers.ConfigPropertiesReader;
 import mentoring.automation.helpers.WebDriverBuilder;
+import mentoring.automation.listeners.TestListener;
 import mentoring.automation.pages.ContactsPage;
 import mentoring.automation.pages.HomePage;
 import mentoring.automation.pages.ProductCatalogPage;
@@ -10,8 +11,10 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(TestListener.class)
 public class ContactsPageTestCase {
     private WebDriver webdriver;
     private HomePage homePage;
