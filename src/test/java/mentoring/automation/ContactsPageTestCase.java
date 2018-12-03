@@ -3,6 +3,7 @@ package mentoring.automation;
 import mentoring.automation.constants.SiteLanguage;
 import mentoring.automation.helpers.ConfigPropertiesReader;
 import mentoring.automation.helpers.WebDriverBuilder;
+import mentoring.automation.listeners.ReportListener;
 import mentoring.automation.listeners.TestListener;
 import mentoring.automation.pages.ContactsPage;
 import mentoring.automation.pages.HomePage;
@@ -14,7 +15,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-@Listeners(TestListener.class)
+@Listeners({ TestListener.class, ReportListener.class })
 public class ContactsPageTestCase {
     private WebDriver webdriver;
     private HomePage homePage;
