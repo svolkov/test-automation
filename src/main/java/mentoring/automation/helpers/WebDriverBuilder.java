@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +25,7 @@ public class WebDriverBuilder {
         if(System.getProperty("os.name").toLowerCase().contains("win")){
             executableFileExtension = ".exe";
             System.setProperty(INTERNET_EXPLORER.getSystemProperty(), WEBDRIVER_PATH + INTERNET_EXPLORER.getPath());
+            System.setProperty(EDGE.getSystemProperty(), WEBDRIVER_PATH + EDGE.getPath());
         }
         System.setProperty( FIREFOX.getSystemProperty(), WEBDRIVER_PATH + FIREFOX.getPath() + executableFileExtension );
         System.setProperty( CHROME.getSystemProperty(), WEBDRIVER_PATH + CHROME.getPath() + executableFileExtension );
@@ -48,6 +50,14 @@ public class WebDriverBuilder {
         }
         logger.info("Creating webdriver for InternetExplorer");
         return new InternetExplorerDriver();
+    }
+    public static WebDriver getEdgeDriver(){
+        if(executableFileExtension.isEmpty()){
+            logger.error( "EDGE is applicable only for OS Windows" );
+            assert false;
+        }
+        logger.info("Creating webdriver for EDGE");
+        return new EdgeDriver();
     }
 
     public static WebDriver getForPredefinedBrowser() {

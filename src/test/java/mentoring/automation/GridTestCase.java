@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 
 public class GridTestCase {
     private final static String testUrl = "http://translate.google.com.ua";
@@ -34,7 +35,7 @@ public class GridTestCase {
         /*Start Hub: java -jar selenium-server-standalone-3.141.59.jar -role hub
           Start Node: java -Dwebdriver.gecko.driver="/home/sergey/projects/webdrivers/geckodriver" -jar selenium-server-standalone-3.141.59.jar -role webdriver -hub http://192.168.0.104:4444/grid/register -port 5566*/
 
-        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+        DesiredCapabilities capabilities = new DesiredCapabilities();
         //capabilities.setPlatform(Platform.LINUX);
         capabilities.setPlatform(Platform.WINDOWS);
         capabilities.setBrowserName("firefox");
@@ -57,7 +58,7 @@ public class GridTestCase {
     @Test
     public void testGrid(){
         driver.get(testUrl);
-        new WebDriverWait(driver, 10)
+        new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.titleIs("Google Перекладач"));
     }
 
@@ -67,7 +68,7 @@ public class GridTestCase {
         driver.findElement(chooseFileButton).sendKeys(filePath);
         driver.findElement(termsButton).click();
         driver.findElement(submitButton).click();
-        new WebDriverWait(driver, 10)
+        new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.textToBePresentInElementLocated(resultMessage, "has been successfully uploaded."));
     }
 }

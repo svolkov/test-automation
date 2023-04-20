@@ -10,6 +10,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class SearchResultsPage {
     private static final Logger logger = LogManager.getLogger( SearchResultsPage.class );
     private final static String PAGE_TITLE_FRAGMENT = "ROZETKA — Результати пошуку:";
@@ -41,7 +43,7 @@ public class SearchResultsPage {
     }
 
     private WebElement waitPresenceOfElement(By elementLocator, long timeInSec){
-        return new WebDriverWait( driver, timeInSec )
+        return new WebDriverWait( driver, Duration.ofSeconds(timeInSec) )
                   .until(ExpectedConditions.presenceOfElementLocated( elementLocator ));
     }
 

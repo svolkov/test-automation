@@ -3,7 +3,8 @@ package mentoring.automation.constants;
 public enum Browsers {
     CHROME ("Chrome", "webdriver.chrome.driver", "/chromedriver"),
     FIREFOX ("FireFox", "webdriver.gecko.driver", "/geckodriver"),
-    INTERNET_EXPLORER ("InternetExplorer", "webdriver.ie.driver", "/IEDriverServer.exe");
+    INTERNET_EXPLORER ("InternetExplorer", "webdriver.ie.driver", "/IEDriverServer.exe"),
+    EDGE ("EDGE", "webdriver.edge.driver", "/msedgedriver.exe");
 
     final String name;
     final String systemProperty;

@@ -10,6 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class ProductCatalogPage {
     private static final Logger logger = LogManager.getLogger( ProductCatalogPage.class );
     private WebDriver driver;
@@ -26,7 +28,7 @@ public class ProductCatalogPage {
     public ProductCatalogPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements( driver, this);
-        new WebDriverWait( driver, 5).until( ExpectedConditions.visibilityOf(sortingContainer) );
+        new WebDriverWait( driver, Duration.ofSeconds(5)).until( ExpectedConditions.visibilityOf(sortingContainer) );
     }
 
     public String getProductGroupName(){

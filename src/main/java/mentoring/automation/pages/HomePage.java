@@ -12,6 +12,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class HomePage {
     private static final Logger logger = LogManager.getLogger( HomePage.class );
     private static final String PAGE_TITLE_FRAGMENT = "ROZETKA";
@@ -102,7 +104,7 @@ public class HomePage {
     private HomePage switchLanguage( By locator ){
         logger.info( "Switch language" );
         driver.findElement( locator ).click();
-        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.presenceOfElementLocated(newcomersGreeting));
         return this;
     }
