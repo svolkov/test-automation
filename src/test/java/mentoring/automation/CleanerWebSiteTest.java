@@ -5,6 +5,7 @@ import mentoring.automation.helpers.Screenshoter;
 import mentoring.automation.helpers.WebDriverBuilder;
 import mentoring.automation.pages.CleanerDownloadPage;
 import mentoring.automation.pages.CleanerHomePage;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -19,6 +20,7 @@ public class CleanerWebSiteTest {
     @BeforeMethod()
     public void beforeClass() {
         webdriver = WebDriverBuilder.getForPredefinedBrowser();
+        webdriver.manage().deleteAllCookies();
         webdriver.get(ConfigPropertiesReader.getSite());
         cleanerHomePage = new CleanerHomePage(webdriver);
     }
@@ -29,7 +31,7 @@ public class CleanerWebSiteTest {
         downloadPage.clickFreeDownload();
     }
 
-    @AfterMethod(groups = {"searching", "negative"})
+    @AfterMethod()
     public void afterMethod(ITestResult results) {
         if (webdriver != null) {
             if (results.getStatus() == ITestResult.FAILURE) {

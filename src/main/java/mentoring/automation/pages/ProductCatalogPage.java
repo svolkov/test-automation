@@ -28,7 +28,7 @@ public class ProductCatalogPage {
     public ProductCatalogPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements( driver, this);
-        new WebDriverWait( driver, Duration.ofSeconds(5)).until( ExpectedConditions.visibilityOf(sortingContainer) );
+        new WebDriverWait( driver, Duration.ofSeconds(5).getSeconds()).until( ExpectedConditions.visibilityOf(sortingContainer) );
     }
 
     public String getProductGroupName(){

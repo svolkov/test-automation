@@ -5,10 +5,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.concurrent.TimeUnit;
 
@@ -40,7 +43,11 @@ public class WebDriverBuilder {
 
     public static WebDriver getChromeDriver(){
         logger.info("Creating webdriver for Chrome");
-        return new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("incognito");
+//        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+//        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+        return new ChromeDriver(options);
     }
 
     public static WebDriver getIEDriver(){
@@ -57,7 +64,10 @@ public class WebDriverBuilder {
             assert false;
         }
         logger.info("Creating webdriver for EDGE");
-        return new EdgeDriver();
+        EdgeOptions options = new EdgeOptions();
+        options.setCapability("InPrivate", true);
+        return new EdgeDriver(options);
+//        return new EdgeDriver();
     }
 
     public static WebDriver getForPredefinedBrowser() {

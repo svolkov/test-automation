@@ -58,7 +58,7 @@ public class GridTestCase {
     @Test
     public void testGrid(){
         driver.get(testUrl);
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(10).getSeconds())
                 .until(ExpectedConditions.titleIs("Google Перекладач"));
     }
 
@@ -68,7 +68,7 @@ public class GridTestCase {
         driver.findElement(chooseFileButton).sendKeys(filePath);
         driver.findElement(termsButton).click();
         driver.findElement(submitButton).click();
-        new WebDriverWait(driver, Duration.ofSeconds(10))
+        new WebDriverWait(driver, Duration.ofSeconds(10).getSeconds())
                 .until(ExpectedConditions.textToBePresentInElementLocated(resultMessage, "has been successfully uploaded."));
     }
 }

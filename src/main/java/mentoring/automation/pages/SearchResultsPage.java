@@ -43,7 +43,7 @@ public class SearchResultsPage {
     }
 
     private WebElement waitPresenceOfElement(By elementLocator, long timeInSec){
-        return new WebDriverWait( driver, Duration.ofSeconds(timeInSec) )
+        return new WebDriverWait( driver, Duration.ofSeconds(timeInSec).getSeconds() )
                   .until(ExpectedConditions.presenceOfElementLocated( elementLocator ));
     }
 

@@ -104,7 +104,7 @@ public class HomePage {
     private HomePage switchLanguage( By locator ){
         logger.info( "Switch language" );
         driver.findElement( locator ).click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10).getSeconds());
         wait.until(ExpectedConditions.presenceOfElementLocated(newcomersGreeting));
         return this;
     }
