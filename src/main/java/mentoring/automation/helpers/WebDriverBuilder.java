@@ -82,6 +82,8 @@ public class WebDriverBuilder {
                 break;
             case INTERNET_EXPLORER : driver = getIEDriver();
                 break;
+            case EDGE : driver = getEdgeDriver();
+                break;
             default : assert false : "Browser is not supported! Check config.properties.";
         }
         return driver;
