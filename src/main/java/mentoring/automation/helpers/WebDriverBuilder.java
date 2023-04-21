@@ -45,8 +45,6 @@ public class WebDriverBuilder {
         logger.info("Creating webdriver for Chrome");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("incognito");
-//        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-//        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         return new ChromeDriver(options);
     }
 
@@ -67,7 +65,6 @@ public class WebDriverBuilder {
         EdgeOptions options = new EdgeOptions();
         options.setCapability("InPrivate", true);
         return new EdgeDriver(options);
-//        return new EdgeDriver();
     }
 
     public static WebDriver getForPredefinedBrowser() {
